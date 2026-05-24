@@ -10,7 +10,7 @@ import {
   MapPin,
   MessageCircle,
   Menu,
-  Navigation,
+  Camera,
   Phone,
   Utensils,
   X,
@@ -49,6 +49,7 @@ const restaurant = {
     "https://www.google.com/maps/search/?api=1&query=Cafe%20del%20Pintor%20Urriola%20652%20Valparaiso",
   mapsEmbed:
     "https://www.google.com/maps?q=Cafe%20del%20Pintor%20Urriola%20652%20Valparaiso&output=embed",
+  instagramUrl: "https://www.instagram.com/cafedelpintor/?hl=es-la",
 };
 
 const WHATSAPP_NUMBER = "56945919063";
@@ -654,8 +655,7 @@ function NosotrosSection() {
           </p>
           <p className="mt-4 max-w-2xl text-lg font-light leading-8 text-[#7A6755]">
             La experiencia mezcla mesa casera, barrio patrimonial y una mirada
-            artística del puerto, sin convertir la web en tienda ni plataforma de
-            pedidos.
+            artística del puerto.
           </p>
 
           <a
@@ -865,18 +865,6 @@ Quedo atento/a a la confirmación. Muchas gracias.
             Solicita una reserva por WhatsApp y el equipo de Café del Pintor
             podrá confirmar disponibilidad directamente por ese canal.
           </p>
-          <div className="mt-8 grid gap-3">
-            {restaurant.phones.map((phone) => (
-              <a
-                key={phone}
-                href={toTelHref(phone)}
-                className="inline-flex items-center gap-3 rounded-[4px] border border-[#F6EDD9]/15 px-5 py-4 text-sm font-light text-[#F6EDD9]/75 transition-colors hover:border-[#BF9130]/50 hover:text-[#F6EDD9]"
-              >
-                <Phone className="size-5 text-[#BF9130]" aria-hidden="true" />
-                {phone}
-              </a>
-            ))}
-          </div>
           <p className="mt-6 border-l-2 border-[#8B3A28] bg-[#F6EDD9]/5 p-5 text-sm font-light leading-6 text-[#F6EDD9]/65">
             La reserva queda sujeta a confirmación del restaurant.
           </p>
@@ -1044,12 +1032,6 @@ function ContactoSection() {
       icon: Phone,
     },
     {
-      label: "Llamar",
-      detail: restaurant.phones[1],
-      href: toTelHref(restaurant.phones[1]),
-      icon: Phone,
-    },
-    {
       label: "Enviar correo",
       detail: restaurant.email,
       href: `mailto:${restaurant.email}`,
@@ -1063,17 +1045,11 @@ function ContactoSection() {
       external: true,
     },
     {
-      label: "Abrir mapa",
-      detail: "Google Maps",
-      href: restaurant.mapsUrl,
-      icon: Navigation,
+      label: "Instagram",
+      detail: "@cafedelpintor",
+      href: restaurant.instagramUrl,
+      icon: Camera,
       external: true,
-    },
-    {
-      label: "Ver carta",
-      detail: "Carta completa",
-      href: "#carta",
-      icon: Utensils,
     },
   ];
 
@@ -1086,7 +1062,7 @@ function ContactoSection() {
           </p>
         </SectionHeading>
 
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {actions.map(({ label, detail, href, icon: Icon, external }) => (
             <a
               key={`${label}-${detail}`}
