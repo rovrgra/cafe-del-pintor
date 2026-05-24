@@ -667,7 +667,7 @@ function Hero() {
             {galleryImages.map((image, index) => (
               <figure
                 key={image.src}
-                className="relative h-[390px] min-w-[78%] snap-center overflow-hidden rounded-[6px] bg-[#F6EDD9] sm:h-[460px] sm:min-w-[62%] lg:h-[560px] lg:min-w-[72%]"
+                className="relative h-[390px] min-w-full snap-center overflow-hidden rounded-[6px] bg-[#F6EDD9] sm:h-[460px] lg:h-[560px]"
               >
                 <Image
                   src={image.src}
