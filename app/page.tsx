@@ -520,7 +520,7 @@ function SectionHeading({
 function LogoMark() {
   return (
     <Image
-      src="/logo-cafe-del-pintor.svg"
+      src="/logo-cafe-del-pintor.png"
       alt="Café del Pintor"
       width={64}
       height={64}
