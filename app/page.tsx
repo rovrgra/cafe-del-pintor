@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import {
   CalendarDays,
   ChevronRight,
@@ -494,80 +495,13 @@ function SectionHeading({
 
 function LogoMark() {
   return (
-    <svg
-      viewBox="0 0 180 180"
-      className="size-14 sm:size-16"
-      role="img"
-      aria-labelledby="logoTitle"
-    >
-      <title id="logoTitle">Café del Pintor Restaurant</title>
-      <defs>
-        <path
-          id="logoTopArc"
-          d="M 31 99 A 59 59 0 0 1 149 99"
-          fill="none"
-        />
-        <path
-          id="logoBottomArc"
-          d="M 42 118 A 55 55 0 0 0 138 118"
-          fill="none"
-        />
-      </defs>
-      <circle cx="90" cy="90" r="78" fill="#FBF6EC" stroke="#4B494A" strokeWidth="3" />
-      <circle cx="90" cy="90" r="48" fill="none" stroke="#4B494A" strokeWidth="2" />
-      <text className="fill-[#1C130B] font-serif text-[17px] tracking-[0.22em]">
-        <textPath href="#logoTopArc" startOffset="50%" textAnchor="middle">
-          CAFÉ DEL PINTOR
-        </textPath>
-      </text>
-      <text className="fill-[#1C130B] font-serif text-[13px] tracking-[0.3em]">
-        <textPath href="#logoBottomArc" startOffset="50%" textAnchor="middle">
-          RESTAURANT
-        </textPath>
-      </text>
-      <circle cx="30" cy="99" r="4" fill="#4B494A" />
-      <circle cx="150" cy="99" r="4" fill="#4B494A" />
-      <ellipse
-        cx="101"
-        cy="93"
-        rx="27"
-        ry="18"
-        transform="rotate(28 101 93)"
-        fill="none"
-        stroke="#111"
-        strokeWidth="2"
-      />
-      <circle cx="93" cy="83" r="5" fill="none" stroke="#111" strokeWidth="2" />
-      <circle cx="109" cy="87" r="4" fill="none" stroke="#111" strokeWidth="2" />
-      <circle cx="120" cy="96" r="4" fill="none" stroke="#111" strokeWidth="2" />
-      <circle cx="111" cy="106" r="3" fill="none" stroke="#111" strokeWidth="2" />
-      <path
-        d="M72 74 C56 61 47 48 44 36 C56 42 65 52 72 74 Z"
-        fill="none"
-        stroke="#111"
-        strokeWidth="2"
-      />
-      <path
-        d="M79 72 C70 58 69 47 73 38 C82 46 84 57 79 72 Z"
-        fill="none"
-        stroke="#111"
-        strokeWidth="2"
-      />
-      <path
-        d="M65 69 L96 112 M75 68 L100 111 M83 73 L105 110"
-        fill="none"
-        stroke="#111"
-        strokeLinecap="round"
-        strokeWidth="2"
-      />
-      <path
-        d="M101 108 L116 136"
-        fill="none"
-        stroke="#111"
-        strokeLinecap="round"
-        strokeWidth="3"
-      />
-    </svg>
+    <Image
+      src="/logo-cafe-del-pintor.svg"
+      alt="Café del Pintor"
+      width={64}
+      height={64}
+      className="h-14 w-14 object-contain sm:h-16 sm:w-16"
+    />
   );
 }
 
