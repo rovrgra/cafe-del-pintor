@@ -54,6 +54,29 @@ const restaurant = {
 
 const WHATSAPP_NUMBER = "56945919063";
 
+const galleryImages = [
+  {
+    src: "/restaurant-terrace.webp",
+    alt: "Terraza de Café del Pintor en Cerro Alegre",
+  },
+  {
+    src: "/restaurant-mural-table.jpg",
+    alt: "Comensales dentro del restaurant junto a murales pintados",
+  },
+  {
+    src: "/restaurant-family-mural.jpg",
+    alt: "Mesa familiar junto a mural artístico en Café del Pintor",
+  },
+  {
+    src: "/restaurant-mural-wall.jpg",
+    alt: "Mural interior de Café del Pintor",
+  },
+  {
+    src: "/restaurant-valparaiso-mural.jpg",
+    alt: "Mural de Valparaíso en el comedor del restaurant",
+  },
+];
+
 const navItems = [
   { label: "Inicio", href: "#inicio" },
   { label: "Nosotros", href: "#nosotros" },
@@ -598,8 +621,8 @@ function Hero() {
         <div className="absolute inset-10 rounded-full border border-[#8B3A28]/10" />
         <div className="absolute inset-20 rounded-full border border-[#8B3A28]/10" />
       </div>
-      <div className="relative mx-auto w-full max-w-7xl">
-        <div className="max-w-[720px]">
+      <div className="relative mx-auto grid w-full max-w-7xl items-center gap-12 lg:grid-cols-[0.92fr_1.08fr]">
+        <div>
           <p className="mb-5 text-xs font-medium uppercase tracking-[0.24em] text-[#8B3A28]">
             Urriola 652 · Cerro Alegre · Valparaíso
           </p>
@@ -630,6 +653,41 @@ function Hero() {
             </a>
           </div>
 
+        </div>
+        <div className="relative lg:justify-self-end">
+          <div className="mb-4 flex items-center justify-between gap-4">
+            <p className="text-xs font-medium uppercase tracking-[0.2em] text-[#8B3A28]">
+              El restaurant
+            </p>
+            <p className="hidden text-sm font-light text-[#7A6755] sm:block">
+              Desliza para ver más
+            </p>
+          </div>
+          <div className="flex snap-x gap-4 overflow-x-auto rounded-[8px] border border-[#8B3A28]/20 bg-[#FBF6EC]/60 p-3 shadow-2xl shadow-[#1C130B]/10">
+            {galleryImages.map((image, index) => (
+              <figure
+                key={image.src}
+                className="relative h-[390px] min-w-[78%] snap-center overflow-hidden rounded-[6px] bg-[#F6EDD9] sm:h-[460px] sm:min-w-[62%] lg:h-[560px] lg:min-w-[72%]"
+              >
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  fill
+                  sizes="(max-width: 640px) 78vw, (max-width: 1024px) 62vw, 44vw"
+                  className="object-cover"
+                  priority={index === 0}
+                />
+              </figure>
+            ))}
+          </div>
+          <div className="mt-4 flex justify-center gap-2" aria-hidden="true">
+            {galleryImages.map((image) => (
+              <span
+                key={`${image.src}-dot`}
+                className="size-2 rounded-full bg-[#8B3A28]/35"
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>
