@@ -7,6 +7,7 @@ import {
   ExternalLink,
   Mail,
   MapPin,
+  MessageCircle,
   Menu,
   Navigation,
   Phone,
@@ -48,6 +49,8 @@ const restaurant = {
   mapsEmbed:
     "https://www.google.com/maps?q=Cafe%20del%20Pintor%20Urriola%20652%20Valparaiso&output=embed",
 };
+
+const WHATSAPP_NUMBER = "56945919063";
 
 const navItems = [
   { label: "Inicio", href: "#inicio" },
@@ -882,62 +885,36 @@ function CartaSection() {
 }
 
 function ReservaSection() {
-  const [reservationStatus, setReservationStatus] = useState<
-    "idle" | "sending" | "success" | "error"
-  >("idle");
-  const [reservationMessage, setReservationMessage] = useState("");
-
-  async function handleReservationSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleReservationSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const form = event.currentTarget;
-    setReservationStatus("sending");
-    setReservationMessage("");
 
-    const formData = new FormData(form);
+    const formData = new FormData(event.currentTarget);
+
     const nombre = String(formData.get("nombre") || "");
     const telefono = String(formData.get("telefono") || "");
-    const correo = String(formData.get("correo") || "");
     const fecha = String(formData.get("fecha") || "");
     const hora = String(formData.get("hora") || "");
     const personas = String(formData.get("personas") || "");
     const comentario = String(formData.get("comentario") || "");
 
-    try {
-      const response = await fetch("/api/reservas", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          nombre,
-          telefono,
-          correo,
-          fecha,
-          hora,
-          personas,
-          comentario,
-        }),
-      });
+    const message = `
+Hola Café del Pintor, quiero solicitar una reserva.
 
-      const result = (await response.json()) as { error?: string };
+Nombre: ${nombre}
+Teléfono: ${telefono}
+Fecha: ${fecha}
+Hora: ${hora}
+Personas: ${personas}
+Comentario: ${comentario}
 
-      if (!response.ok) {
-        throw new Error(result.error || "No se pudo enviar la reserva.");
-      }
+Quedo atento/a a la confirmación. Muchas gracias.
+    `.trim();
 
-      setReservationStatus("success");
-      setReservationMessage(
-        "Solicitud enviada al sistema de correo. Revisa la bandeja de entrada, correo no deseado y los logs de Brevo si no aparece en unos minutos.",
-      );
-      form.reset();
-    } catch (error) {
-      setReservationStatus("error");
-      setReservationMessage(
-        error instanceof Error
-          ? error.message
-          : "No se pudo enviar la reserva. Inténtalo nuevamente.",
-      );
-    }
+    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+      message,
+    )}`;
+
+    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
   }
 
   return (
@@ -951,8 +928,8 @@ function ReservaSection() {
             Reserva tu <span className="italic text-[#BF9130]">mesa</span>
           </h2>
           <p className="mt-6 text-lg font-light leading-8 text-[#F6EDD9]/65">
-            Solicita una reserva y el equipo de Café del Pintor podrá confirmar
-            disponibilidad por teléfono o correo.
+            Solicita una reserva por WhatsApp y el equipo de Café del Pintor
+            podrá confirmar disponibilidad directamente por ese canal.
           </p>
           <div className="mt-8 grid gap-3">
             {restaurant.phones.map((phone) => (
@@ -993,16 +970,6 @@ function ReservaSection() {
                 type="tel"
                 className="rounded-[3px] border border-[#F6EDD9]/15 bg-[#F6EDD9]/8 px-4 py-3 text-sm font-light normal-case tracking-normal text-[#F6EDD9] outline-none transition-colors placeholder:text-[#F6EDD9]/25 focus:border-[#F6EDD9]/35"
                 placeholder="+56 9 1234 5678"
-              />
-            </label>
-            <label className="grid gap-2 text-xs font-medium uppercase tracking-[0.14em] text-[#F6EDD9]/50 md:col-span-2">
-              Correo
-              <input
-                name="correo"
-                required
-                type="email"
-                className="rounded-[3px] border border-[#F6EDD9]/15 bg-[#F6EDD9]/8 px-4 py-3 text-sm font-light normal-case tracking-normal text-[#F6EDD9] outline-none transition-colors placeholder:text-[#F6EDD9]/25 focus:border-[#F6EDD9]/35"
-                placeholder="tu.correo@ejemplo.com"
               />
             </label>
             <label className="grid gap-2 text-xs font-medium uppercase tracking-[0.14em] text-[#F6EDD9]/50">
@@ -1046,26 +1013,14 @@ function ReservaSection() {
           </div>
           <button
             type="submit"
-            disabled={reservationStatus === "sending"}
             className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-[4px] bg-[#8B3A28] px-6 py-4 text-xs font-semibold uppercase tracking-[0.12em] text-[#F6EDD9] transition-colors hover:bg-[#A94E3A] sm:w-auto"
           >
-            {reservationStatus === "sending"
-              ? "Enviando solicitud..."
-              : "Enviar solicitud"}
-            <Mail className="size-4" aria-hidden="true" />
+            Reservar por WhatsApp
+            <MessageCircle className="size-4" aria-hidden="true" />
           </button>
-          {reservationMessage ? (
-            <p
-              className={`mt-4 border-l-2 p-4 text-sm font-light leading-6 ${
-                reservationStatus === "success"
-                  ? "border-[#BF9130] bg-[#BF9130]/10 text-[#F6EDD9]"
-                  : "border-[#8B3A28] bg-[#8B3A28]/15 text-[#F6EDD9]"
-              }`}
-              role="status"
-            >
-              {reservationMessage}
-            </p>
-          ) : null}
+          <p className="mt-4 border-l-2 border-[#BF9130] bg-[#BF9130]/10 p-4 text-sm font-light leading-6 text-[#F6EDD9]">
+            La reserva queda sujeta a confirmación del restaurant por WhatsApp.
+          </p>
         </form>
       </div>
     </section>
@@ -1167,6 +1122,13 @@ function ContactoSection() {
       icon: Mail,
     },
     {
+      label: "Escribir por WhatsApp",
+      detail: "+56 9 4591 9063",
+      href: `https://wa.me/${WHATSAPP_NUMBER}`,
+      icon: MessageCircle,
+      external: true,
+    },
+    {
       label: "Abrir mapa",
       detail: "Google Maps",
       href: restaurant.mapsUrl,
@@ -1190,7 +1152,7 @@ function ContactoSection() {
           </p>
         </SectionHeading>
 
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
           {actions.map(({ label, detail, href, icon: Icon, external }) => (
             <a
               key={`${label}-${detail}`}
